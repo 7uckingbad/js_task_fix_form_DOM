@@ -7,6 +7,10 @@ forms.forEach((form) => {
   const inputs = form.querySelectorAll('input');
 
   inputs.forEach((input) => {
+    if (!input.name) {
+      return;
+    }
+
     const label = document.createElement('label');
 
     label.classList.add('field-label');
@@ -16,13 +20,15 @@ forms.forEach((form) => {
     }
 
     label.setAttribute('for', input.id);
-    label.textContent = input.name;
-    input.parentElement.appendChild(label);
-    input.placeholder = input.name.toUpperCase();
 
-    if (input.name) {
-      input.placeholder =
-        input.name.charAt(0).toUpperCase() + input.name.slice(1);
-    }
+    label.textContent =
+      input.name.replace(/_/g, ' ').charAt(0).toUpperCase() +
+      input.name.slice(1);
+
+    input.parentElement.appendChild(label);
+
+    input.placeholder =
+      input.name.replace(/_/g, ' ').charAt(0).toUpperCase() +
+      input.name.slice(1);
   });
 });
